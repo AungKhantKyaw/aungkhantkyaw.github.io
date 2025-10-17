@@ -14,7 +14,8 @@ export default function App() {
   }, []);
 
   const skills = [
-    { skill: "PHP (CodeIgniter, Laravel)", level: 90, color: "from-purple-500 to-pink-500" },
+    { skill: "PHP (CodeIgniter, Vanilla)", level: 90, color: "from-purple-500 to-pink-500" },
+    { skill: "CMS and E-Commerce", level: 85, color: "from-gray-500 to-gray-500" },
     { skill: "JavaScript (ES6+)", level: 85, color: "from-yellow-500 to-amber-500" },
     { skill: "Modern JS Frameworks", level: 65, color: "from-blue-500 to-cyan-500" },
     { skill: "Database", level: 80, color: "from-green-500 to-emerald-500" },
