@@ -1,187 +1,241 @@
-import './App.css';
+import "./App.css";
 import { useEffect, useState } from "react";
-import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
-import { ArrowDown, Code2, Sparkles } from "lucide-react";
+import { FaEnvelope, FaLinkedin, FaGithub, FaMoon, FaSun, FaTimes, FaExternalLinkAlt } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function App() {
-  const [scrollY, setScrollY] = useState(0);
+  const [dark, setDark] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     document.title = "Aung Khant Kyaw | Portfolio";
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
 
-  const skills = [
-    { skill: "PHP (CodeIgniter, Vanilla)", level: 90, color: "from-purple-500 to-pink-500" },
-    { skill: "CMS and E-Commerce", level: 85, color: "from-gray-500 to-gray-500" },
-    { skill: "JavaScript (ES6+)", level: 85, color: "from-yellow-500 to-amber-500" },
-    { skill: "Modern JS Frameworks", level: 65, color: "from-blue-500 to-cyan-500" },
-    { skill: "Database", level: 80, color: "from-green-500 to-emerald-500" },
-    { skill: "API Integration", level: 80, color: "from-indigo-500 to-purple-500" },
-    { skill: "Docker, Git & CI/CD", level: 70, color: "from-orange-500 to-red-500" },
-    { skill: "Tailwind & Bootstrap", level: 75, color: "from-pink-500 to-rose-500" },
-    { skill: "Python & Django", level: 55, color: "from-teal-500 to-cyan-500" },
-    { skill: "Machine Learning (Scikit-learn, TensorFlow/PyTorch)", level: 45, color: "from-lime-500 to-green-500" },
+  const projects = [
+    {
+      title: "E-commerce Platform & Integrations",
+      subtitle: "Scalable Architecture for High-Volume Retail",
+      description: "Designed scalable backend systems and APIs integrating CRM, payments, and third-party services.",
+      challenge: "Legacy systems struggled with API timeouts and data synchronization issues during high-traffic periods, impacting customer experience.",
+      solution: "Architected a robust API layer using Laravel and AWS. Decoupled services to ensure that CRM syncs and payment processing didn't block the main user thread.",
+      result: "Improved system reliability and reduced API latency. The architecture successfully supported complex third-party integrations with zero data loss during peak loads.",
+      tech: ["OpenCart", "Laravel", "Alpine.js", "React", "Bootstrap", "AWS"],
+      github: "#",
+      demo: "https://www.kusuriexpress.com/",
+    },
+    {
+      title: "Job Application Tracker",
+      subtitle: "Full-stack Productivity Tool",
+      description: "A centralized MERN stack application designed to replace fragmented spreadsheets, allowing for efficient management of high-volume job applications and recruitment lifecycles.",
+      challenge: "Managing numerous applications via Excel led to data fragmentation and high manual overhead, making it difficult to track follow-up timelines and specific job details across different platforms.",
+      solution: "Developed a responsive web application with a React-based dashboard, a RESTful Node.js/Express API, and a persistent MongoDB database to automate organization and provide real-time status updates.",
+      result: "Eliminated the risk of missed follow-ups and reduced administrative logging time by providing a structured, mobile-friendly interface to manage hundreds of applications in one place.",
+      tech: ["Node.js", "React", "MongoDB", "Express"],
+      github: "https://github.com/AungKhantKyaw/job-tracker",
+      demo: "#",
+    },
+    {
+      title: "Phishing URL Detection System",
+      subtitle: "Machine Learning Cybersecurity Research",
+      description: "A machine learning system that detects phishing URLs using lexical, domain, and content-based feature analysis with ensemble models.",
+      challenge: "Traditional blacklist/whitelist methods fail to detect newly generated phishing URLs due to delayed updates. The challenge was to build a model capable of identifying zero-day phishing attacks using only URL and domain characteristics.",
+      solution: "Engineered a dataset of 11,000+ URLs from PhishTank and UCI, extracting 30+ features including domain age, HTTPS usage, subdomains, and script-based link patterns. Implemented and optimized Random Forest and Gradient Boosting classifiers using RandomizedSearchCV, with structured train/validation/test splits for robust evaluation.",
+      result: "Achieved up to 97.2% accuracy after optimization, with strong generalization on unseen data (~96.7% test accuracy). Identified key phishing indicators such as HTTPS usage, domain registration length, and anchor URL patterns, improving detection reliability against evolving threats.",
+      tech: ["Python", "Scikit-learn", "Machine Learning", "Data Preprocessing", "Feature Engineering", "Django"],
+      github: "https://github.com/AungKhantKyaw/phishing_detection",
+      demo: "#",
+    },
   ];
 
-
   return (
-    <div className="bg-black text-white overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        {/* Animated Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div 
-            className="absolute inset-0 opacity-30"
-            style={{
-              transform: `translateY(${scrollY * 0.5}px)`,
-              background: 'radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%), radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.3), transparent 50%), radial-gradient(circle at 40% 20%, rgba(168, 85, 247, 0.2), transparent 50%)'
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          <div className="inline-block mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30">
-            <span className="text-purple-300 text-sm font-medium">Available for opportunities</span>
-          </div>
-          
-          <h1 className="text-6xl md:text-8xl font-black mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent leading-tight">
-            Aung Khant Kyaw
-          </h1>
-          
-          <p className="text-2xl md:text-4xl text-gray-300 font-light mb-8 flex items-center justify-center gap-3 flex-wrap">
-            <Code2 className="text-purple-400" size={32} />
-            <span>Full-stack Developer</span>
-            <span className="text-purple-400">×</span>
-            <span>Software Engineer</span>
-          </p>
-
-          <div className="flex gap-4 justify-center mb-16">
-            <a 
-              href="#skills" 
-              className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all hover:scale-105"
+    <div className="min-h-screen transition-colors duration-500 bg-white text-black dark:bg-black dark:text-white">
+      {/* NAVBAR */}
+      <nav className="fixed top-0 left-0 w-full backdrop-blur z-50 bg-white/70 border-gray-200 dark:bg-black/50 dark:border-gray-800 border-b">
+        <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+          <span className="font-bold text-gradient">Aung Khant Kyaw</span>
+          <div className="flex items-center gap-6 text-sm">
+            <a href="#projects" className="hover:text-purple-500 transition">Projects</a>
+            <a href="#contact" className="hover:text-purple-500 transition">Contact</a>
+            <button
+              onClick={() => setDark(!dark)}
+              className="p-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:scale-110 transition"
             >
-              View My Skills
+              {dark ? <FaSun className="text-yellow-400" /> : <FaMoon />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <section className="min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
+        <div className="absolute inset-0 gradient-bg opacity-20" />
+        <motion.div 
+          variants={container} 
+          initial="hidden" 
+          animate="show" 
+          className="z-10 text-center max-w-4xl mx-auto px-6"
+        >
+          <motion.p 
+            variants={item} 
+            className="text-xl md:text-2xl lg:text-3xl text-gray-300 font-light leading-tight mb-8"
+          >
+            Auckland-based Full-Stack Software Engineer with 10+ years building scalable APIs 
+            and production systems.
+          </motion.p>
+
+          <motion.p 
+            variants={item} 
+            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10"
+          >
+            Strong foundation in <span className="text-purple-400 font-medium">PHP</span> and backend architecture. 
+            Now actively expanding into <span className="text-purple-400 font-medium">Python</span> (Django/FastAPI) 
+            and the <span className="text-purple-400 font-medium">MERN stack</span> to build modern, data-driven applications.
+          </motion.p>
+
+          <motion.div variants={item} className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a 
+              href="#projects" 
+              className="btn-primary px-8 py-4 text-lg font-semibold"
+            >
+              View My Projects
             </a>
             <a 
-              href="#feedback" 
+              href="#contact" 
               className="px-8 py-4 border border-purple-500/50 rounded-full font-semibold hover:bg-purple-500/10 transition-all"
             >
-              Get in Touch
+              Get In Touch
             </a>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* PROJECTS */}
+      <section id="projects" className="py-32 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold mb-16 text-center">Selected Work</h2>
+          <div className="space-y-24">
+            {projects.map((project, i) => (
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="grid md:grid-cols-2 gap-12 items-start"
+              >
+                <div className="aspect-video bg-gray-100 dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-inner flex items-center justify-center group overflow-hidden">
+                  <span className="text-gray-400 group-hover:scale-110 transition duration-500 cursor-default uppercase tracking-widest text-sm font-bold">
+                    {project.title} Preview
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-3xl font-bold mb-3">{project.title}</h3>
+                  <p className="text-purple-600 dark:text-purple-400 font-medium mb-4">{project.subtitle}</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.tech.map((t) => (
+                      <span key={t} className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-xs rounded-full font-mono">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <button 
+                    onClick={() => setSelectedProject(project)}
+                    className="btn-primary inline-flex items-center gap-2"
+                  >
+                    Read Case Study
+                  </button>
+                </div>
+              </motion.div>
+            ))}
           </div>
-
-          <a href="#skills" className="inline-block animate-bounce">
-            <ArrowDown size={32} className="text-purple-400" />
-          </a>
-        </div>
-
-        {/* Floating Elements */}
-        <div className="absolute top-1/4 left-10 animate-pulse">
-          <Sparkles className="text-purple-400 opacity-60" size={24} />
-        </div>
-        <div className="absolute bottom-1/3 right-10 animate-pulse delay-75">
-          <Sparkles className="text-pink-400 opacity-60" size={20} />
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-32 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black" />
-        
-        <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-black mb-4">
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Skills &
-              </span>
-              <br />
-              <span className="text-white">Expertise</span>
-            </h2>
-            <p className="text-gray-400 text-lg mt-4">Technologies I work with daily</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {skills.map((item, i) => (
-              <div
-                key={item.skill}
-                className="group relative p-8 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-purple-500/50 transition-all duration-300 hover:scale-105"
-                style={{ animationDelay: `${i * 100}ms` }}
+      {/* CASE STUDY MODAL */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+            onClick={() => setSelectedProject(null)}
+          >
+            <motion.div 
+              initial={{ y: 50, scale: 0.95 }} animate={{ y: 0, scale: 1 }} exit={{ y: 50, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white dark:bg-gray-900 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl p-8 md:p-12 shadow-2xl relative"
+            >
+              <button 
+                onClick={() => setSelectedProject(null)} 
+                className="absolute top-6 right-6 p-2 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-all"
               >
-                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300" 
-                     style={{ background: `linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2))` }} />
+                <FaTimes size={20} />
+              </button>
+              
+              <h2 className="text-4xl font-bold mb-2">{selectedProject.title}</h2>
+              <p className="text-purple-600 font-semibold text-lg mb-10">{selectedProject.subtitle}</p>
+
+              <div className="grid md:grid-cols-3 gap-10">
+                <div className="md:col-span-2 space-y-10">
+                  <section>
+                    <h4 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-black mb-4">The Challenge</h4>
+                    <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{selectedProject.challenge}</p>
+                  </section>
+                  <section>
+                    <h4 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-black mb-4">The Solution</h4>
+                    <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">{selectedProject.solution}</p>
+                  </section>
+                </div>
                 
-                <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-2xl font-bold text-white">{item.skill}</h3>                    
-                  </div>
-                  
-                  <div className="relative h-3 bg-gray-700 rounded-full overflow-hidden">
-                    <div
-                      className={`absolute inset-y-0 left-0 bg-gradient-to-r ${item.color} rounded-full transition-all duration-1000 ease-out`}
-                      style={{ width: `${item.level}%` }}
-                    />
+                <div className="space-y-8">
+                  <section className="p-6 bg-purple-50 dark:bg-purple-900/10 rounded-2xl border border-purple-100 dark:border-purple-900/30">
+                    <h4 className="text-xs uppercase tracking-[0.2em] text-purple-600 dark:text-purple-400 font-black mb-3">The Result</h4>
+                    <p className="text-lg font-bold leading-tight">{selectedProject.result}</p>
+                  </section>
+                  <div className="flex flex-col gap-3">
+                    <a href={selectedProject.github} className="btn-primary w-full text-center py-3 flex items-center justify-center gap-2" target="_blank" rel="noopener noreferrer">
+                      <FaGithub /> View Source
+                    </a>
+                    <a href={selectedProject.demo} className="btn-secondary w-full text-center py-3 flex items-center justify-center gap-2" target="_blank" rel="noopener noreferrer">
+                      <FaExternalLinkAlt size={14} /> Live Demo
+                    </a>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Contact Section */}
-      <section id="feedback" className="py-32 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-pink-950/20 to-black" />
-        
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl font-black mb-6">
-            <span className="text-white">Let's</span>
-            <br />
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Connect
-            </span>
-          </h2>
-          <p className="text-gray-400 text-lg mb-12">
-            Find me on social media or reach out directly
-          </p>
-
-          <div className="flex justify-center gap-6 flex-wrap">
-            {[                           
-              { Icon: FaLinkedin, url: "https://linkedin.com/in/agkhantkyaw", color: "hover:text-blue-600", label: "LinkedIn" },
-              { Icon: FaEnvelope, url: "mailto:aungkhantkyaw.akk@gmail.com", color: "hover:text-red-500", label: "Email" },
-              { Icon: FaGithub, url: "https://github.com/AungKhantKyaw", color: "hover:text-gray-300", label: "GitHub" }
-            ].map(({ Icon, url, color, label }) => (
-              <a
-                key={label}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 hover:border-purple-500/50 transition-all hover:scale-110 ${color}`}
-                aria-label={label}
-              >
-                <Icon size={40} />
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-gray-800 relative">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
-          <p>© {new Date().getFullYear()} Aung Khant Kyaw. All rights reserved.</p>
-          
-          <a 
-            href="#" 
-            className="px-6 py-2 rounded-full border border-gray-700 hover:border-purple-500/50 transition-all hover:bg-purple-500/10"
-          >
-            Back to Top ↑
+      {/* CONTACT */}
+      <section id="contact" className="py-32 px-4 text-center border-t border-gray-100 dark:border-gray-900">
+        <h2 className="text-4xl font-bold mb-12">Let&apos;s Build Together</h2>
+        <div className="flex justify-center gap-8 text-gray-600 dark:text-gray-400">
+          <a href="https://linkedin.com/in/agkhantkyaw" className="hover:text-purple-500 transition-transform hover:scale-110">
+            <FaLinkedin size={32} />
           </a>
-          
+          <a href="mailto:aungkhantkyaw.akk@gmail.com" className="hover:text-purple-500 transition-transform hover:scale-110">
+            <FaEnvelope size={32} />
+          </a>
+          <a href="https://github.com/AungKhantKyaw" className="hover:text-purple-500 transition-transform hover:scale-110">
+            <FaGithub size={32} />
+          </a>
         </div>
-      </footer>
+      </section>
     </div>
   );
 }
