@@ -46,7 +46,7 @@ export default function App() {
       result: "Eliminated the risk of missed follow-ups and reduced administrative logging time by providing a structured, mobile-friendly interface to manage hundreds of applications in one place.",
       tech: ["Node.js", "React", "MongoDB", "Express"],
       github: "https://github.com/AungKhantKyaw/job-tracker",
-      demo: "#",
+      demo: "",
     },
     {
       title: "Phishing URL Detection System",
@@ -57,7 +57,7 @@ export default function App() {
       result: "Achieved up to 97.2% accuracy after optimization, with strong generalization on unseen data (~96.7% test accuracy). Identified key phishing indicators such as HTTPS usage, domain registration length, and anchor URL patterns, improving detection reliability against evolving threats.",
       tech: ["Python", "Scikit-learn", "Machine Learning", "Data Preprocessing", "Feature Engineering", "Django"],
       github: "https://github.com/AungKhantKyaw/phishing_detection",
-      demo: "#",
+      demo: "",
     },
   ];
 
@@ -210,9 +210,16 @@ export default function App() {
                     <a href={selectedProject.github} className="btn-primary w-full text-center py-3 flex items-center justify-center gap-2" target="_blank" rel="noopener noreferrer">
                       <FaGithub /> View Source
                     </a>
-                    <a href={selectedProject.demo} className="btn-secondary w-full text-center py-3 flex items-center justify-center gap-2" target="_blank" rel="noopener noreferrer">
-                      <FaExternalLinkAlt size={14} /> Live Demo
-                    </a>
+                    {selectedProject.demo && (
+                      <a 
+                        href={selectedProject.demo} 
+                        className="btn-secondary w-full text-center py-3 flex items-center justify-center gap-2" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        <FaExternalLinkAlt size={14} /> Live Demo
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
